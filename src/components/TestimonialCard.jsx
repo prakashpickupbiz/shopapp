@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 
 const testimonials = [
@@ -38,7 +38,7 @@ const testimonials = [
         rating: 4,
     },
     {
-        name: "Sanya Kapoor",
+        name: "Sanjay Kapoor",
         position: "Content Writer",
         image: "https://cdn.pixabay.com/photo/2016/11/19/13/08/business-1839191_1280.jpg",
         text: "Outstanding service and support. The team went above and beyond to meet our needs.",
@@ -46,12 +46,8 @@ const testimonials = [
     },
 ];
 
-const TestimonialCard = ({ name, position, image, text, rating, onHover, onLeave }) => (
-    <div
-        className="bg-white shadow-lg rounded-lg p-6 md:p-8 flex flex-col items-center text-center mx-4 min-w-[300px]"
-        onMouseEnter={onHover}
-        onMouseLeave={onLeave}
-    >
+const TestimonialCard = ({ name, position, image, text, rating }) => (
+    <div className="bg-white shadow-lg rounded-lg p-6 md:p-8 flex flex-col items-center text-center mx-4 min-w-[300px]">
         <img
             className="w-20 h-20 rounded-full object-cover mb-4"
             src={image}
@@ -73,30 +69,31 @@ const TestimonialCard = ({ name, position, image, text, rating, onHover, onLeave
 
 const Testimonials = () => {
     const scrollContainerRef = useRef(null);
-    const [isPaused, setIsPaused] = useState(false);
 
     useEffect(() => {
         const scrollContainer = scrollContainerRef.current;
 
-        // Function to handle continuous scrolling
         const scrollLoop = () => {
-            if (scrollContainer && !isPaused) {
-                scrollContainer.scrollLeft += 1;
+            if (scrollContainer) {
+                scrollContainer.scrollLeft += 1; // Adjust the scroll speed as needed
 
                 // If scroll reaches the end, reset to the beginning
                 if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
                     scrollContainer.scrollLeft = 0;
                 }
+
+                // Use requestAnimationFrame for smooth looping
+                requestAnimationFrame(scrollLoop);
             }
         };
 
-        // Set up an interval for scrolling
-        const interval = setInterval(scrollLoop, 20);
+        // Start the scroll loop
+        requestAnimationFrame(scrollLoop);
 
-        return () => clearInterval(interval);
-    }, [isPaused]);
+        // Cleanup function is not needed here because we don't want to stop the loop
+    }, []);
 
-    // Duplicate testimonials to create an infinite loop
+    // Duplicate testimonials to create an infinite loop effect
     const duplicatedTestimonials = [...testimonials, ...testimonials];
 
     return (
@@ -109,8 +106,6 @@ const Testimonials = () => {
                 <div
                     ref={scrollContainerRef}
                     className="flex overflow-x-scroll no-scrollbar scroll-smooth w-full"
-                    onMouseEnter={() => setIsPaused(true)}
-                    onMouseLeave={() => setIsPaused(false)}
                     style={{
                         scrollbarWidth: "none", // Hides the scrollbar for Firefox
                         msOverflowStyle: "none", // Hides the scrollbar for IE and Edge

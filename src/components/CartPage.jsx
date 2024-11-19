@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -31,6 +31,11 @@ const CartPage = () => {
             toast.warning(`Quantity cannot be less than 1.`);
         }
     };
+
+    // Scroll to top when cart changes
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, [cart]);
 
     return (
         <div className="p-6">

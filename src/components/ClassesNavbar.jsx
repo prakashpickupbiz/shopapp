@@ -32,8 +32,8 @@ export default function ClassesNavbar() {
                         <Link to={"/"}>
                             <li className="hover:text-blue-500">Home</li>
                         </Link>
-                        <Link to={"/product"}>
-                            <li className="hover:text-blue-500">Products</li>
+                        <Link to={"/classes"}>
+                            <li className="hover:text-blue-500">Classes</li>
                         </Link>
 
                         <Link to={"/cart"}>
@@ -61,11 +61,11 @@ export default function ClassesNavbar() {
                     </form>
 
                     {/* Profile Icon */}
-                    <CartBadge/>
+                    <CartBadge />
                     <div className="text-2xl">
 
                         <Link to={"/profile"}>
-                        <MdPersonPin />
+                            <MdPersonPin />
                         </Link>
                     </div>
 

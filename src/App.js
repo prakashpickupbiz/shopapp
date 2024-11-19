@@ -5,22 +5,22 @@ import ProfilePage from "./components/ProfilePage";
 import Footer from "./components/Footer";
 import Testimonials from "./components/TestimonialCard";
 import HeroSection from "./components/HeroSection";
+import Counter from "./components/Counter";
+
 
 const App = () => {
   return (
     <div>
       <AppRouter />
 
-      
-      <Testimonials/>
-      <Footer/>
-      {/* <HeroSection/> */}
-      {/* <ProfilePage /> */}
+      <Testimonials />
+      <Footer />
+
+
+
+      {/* <Counter/> */}
     </div>
   );
 };
 
 export default App;
-
-
-
