@@ -200,3 +200,5 @@ export const products = [
     path: "./painting",
   },
 ];
+
+

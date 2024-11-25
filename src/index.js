@@ -11,6 +11,7 @@ ReactDOM.render(
     <BrowserRouter>
       <ClassesNavbar />
 
+
       <App />
     </BrowserRouter>
   </CartProvider>,

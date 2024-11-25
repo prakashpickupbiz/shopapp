@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Testimonials from "./components/TestimonialCard";
 import HeroSection from "./components/HeroSection";
 import Counter from "./components/Counter";
+import Card from "./components/ClassesDesc/Card";
 
 
 const App = () => {
@@ -15,6 +16,8 @@ const App = () => {
 
       <Testimonials />
       <Footer />
+
+      {/* <Card/> */}
 
 
 

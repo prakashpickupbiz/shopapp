@@ -40,7 +40,10 @@ export default function ClassesNavbar() {
                             <li className="hover:text-blue-500">Cart</li>
                         </Link>
                         <li className="hover:text-blue-500">Pages</li>
+
+                        <Link to="/contact">
                         <li className="hover:text-blue-500">Contact</li>
+                        </Link>
                     </ul>
                 </div>
 

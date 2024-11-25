@@ -2,6 +2,7 @@ import React from "react";
 import { FaInstagram, FaFacebookF, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 import { AiOutlineMail, AiOutlinePhone, AiOutlineEnvironment } from "react-icons/ai";
 import { IoIosArrowDropright } from "react-icons/io"; // Import arrow icon
+import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
@@ -36,7 +37,9 @@ const Footer = () => {
                     <ul className="space-y-2 text-gray-700">
                         <li className="flex items-center space-x-2">
                             <IoIosArrowDropright />
-                            <a href="#" className="hover:text-blue-500">Courses</a>
+                            <Link to="/classes">
+                                <a href="#" className="hover:text-blue-500">Courses</a>
+                            </Link>
                         </li>
                         <li className="flex items-center space-x-2">
                             <IoIosArrowDropright />
@@ -82,7 +85,9 @@ const Footer = () => {
                         </li>
                         <li className="flex items-center space-x-2">
                             <IoIosArrowDropright />
+                            <Link to={"/contact"}>
                             <a href="#" className="hover:text-blue-500">Contact Us</a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -120,7 +125,7 @@ const Footer = () => {
                     </form>
                 </div>
             </div>
-            
+
         </footer>
 
     );
