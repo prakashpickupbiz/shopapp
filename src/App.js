@@ -7,7 +7,8 @@ import Testimonials from "./components/TestimonialCard";
 import HeroSection from "./components/HeroSection";
 import Counter from "./components/Counter";
 import Card from "./components/ClassesDesc/Card";
-
+import AnimatedCounter from "./components/ClassesDesc/AnimatedCounter";
+import SocialAchievements from "./components/ClassesDesc/SocialAchievements";
 
 const App = () => {
   return (
@@ -19,9 +20,9 @@ const App = () => {
 
       {/* <Card/> */}
 
-
-
       {/* <Counter/> */}
+      
+
     </div>
   );
 };
