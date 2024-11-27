@@ -46,20 +46,20 @@ const ProductPage = () => {
                             <div className="flex gap-1">
                                 <button
                                     onClick={() => handleAddToCart(product)}
-                                    className="mt-4 bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 rounded-lg w-1/2 py-2 px-4 flex items-center justify-center hover:translate-y-1  "
+                                    className="mt-4 bg-blue-600 text-white hover:bg-blue-700 transition-colors font-bold duration-200 rounded-lg w-1/2 py-2 px-4 flex items-center justify-center hover:translate-y-1  "
                                 >
-                                    <FaCartShopping className="mr-2" /> Add to Cart
+                                     Enroll Now
                                 </button>
 
-                                    <button
-                                       
-                                        className="mt-4 bg-gray-700 text-white hover:bg-blue-700 transition-colors duration-200 rounded-lg w-1/2 py-2 px-4 flex items-center justify-center hover:translate-y-1 "
-                                    >
+                                <button
+
+                                    className="mt-4 bg-gray-700 text-white hover:bg-blue-700 transition-colors duration-200 rounded-lg w-1/2 py-2 px-4 flex items-center justify-center hover:translate-y-1 "
+                                >
                                     <FaExternalLinkSquareAlt className="mr-2" />
-                                <Link to={product.path} >
+                                    <Link to={product.path} >
                                         Learn more
-                                </Link>
-                                    </button>
+                                    </Link>
+                                </button>
                             </div>
 
 

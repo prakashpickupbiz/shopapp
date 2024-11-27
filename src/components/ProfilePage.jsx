@@ -1,20 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProfilePage = () => {
     const navigate = useNavigate();
 
-    // State for user information
-    const [user, setUser] = useState({
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-        profilePic: null, // New field for profile picture
+    // Load user data from localStorage or set default values
+    const [user, setUser] = useState(() => {
+        const savedUser = localStorage.getItem("userProfile");
+        return savedUser
+            ? JSON.parse(savedUser)
+            : {
+                name: "",
+                email: "",
+                phone: "",
+                address: "",
+                profilePic: null,
+            };
     });
 
     // State to track if the form is in edit mode
-    const [isEditing, setIsEditing] = useState(true); // Start in edit mode
+    const [isEditing, setIsEditing] = useState(false);
+
+    // Save user data to localStorage whenever it changes
+    useEffect(() => {
+        localStorage.setItem("userProfile", JSON.stringify(user));
+    }, [user]);
 
     // Handler for form input changes
     const handleChange = (e) => {
@@ -24,7 +36,14 @@ const ProfilePage = () => {
 
     // Handler for saving the form
     const handleSave = () => {
+        if (!user.name || !user.email || !user.phone || !user.address) {
+            toast.error("All fields must be filled out before saving!", {
+                position: "top-right",
+            });
+            return;
+        }
         setIsEditing(false);
+        toast.success("Profile saved successfully!", { position: "top-right" });
     };
 
     // Handler for editing the form
@@ -34,7 +53,7 @@ const ProfilePage = () => {
 
     // Handler for logging out
     const handleLogout = () => {
-        alert("You have logged out!");
+        toast.info("You have logged out!", { position: "top-right" });
         navigate("/"); // Redirect to home page
     };
 
@@ -45,13 +64,17 @@ const ProfilePage = () => {
             const reader = new FileReader();
             reader.onload = () => {
                 setUser({ ...user, profilePic: reader.result });
+                toast.success("Profile picture updated!", { position: "top-right" });
             };
             reader.readAsDataURL(file);
+        } else {
+            toast.warning("No file selected!", { position: "top-right" });
         }
     };
 
     return (
         <div className="p-6 bg-gray-100 min-h-screen">
+            <ToastContainer />
             <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6">
                 <h2 className="text-2xl font-semibold mb-4">Profile</h2>
 
@@ -59,17 +82,26 @@ const ProfilePage = () => {
                 <div className="mb-6 text-center">
                     <div className="relative">
                         <img
-                            src={user.profilePic || "https://via.placeholder.com/150"} // Placeholder image if no profile pic
+                            src={user.profilePic || "https://via.placeholder.com/150"}
                             alt="Profile"
                             className="w-32 h-32 rounded-full mx-auto object-cover border-2 border-gray-300"
                         />
                         {isEditing && (
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleProfilePicChange}
-                                className="mt-2 block mx-auto text-sm text-gray-500"
-                            />
+                            <div className="mt-2">
+                                <label
+                                    htmlFor="profilePic"
+                                    className="bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-600"
+                                >
+                                    Upload Image
+                                </label>
+                                <input
+                                    id="profilePic"
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleProfilePicChange}
+                                    className="hidden"
+                                />
+                            </div>
                         )}
                     </div>
                 </div>
@@ -104,13 +136,21 @@ const ProfilePage = () => {
                             <div>
                                 <label className="block text-gray-700 font-medium">Phone</label>
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="phone"
                                     value={user.phone}
-                                    onChange={handleChange}
+                                    onChange={(e) => {
+                                        let value = e.target.value;
+                                        // Trim to 10 digits
+                                        if (value.length > 10) {
+                                            value = value.slice(0, 10);
+                                        }
+                                        handleChange({ target: { name: 'phone', value } });
+                                    }}
                                     className="w-full p-2 border rounded-lg"
                                     disabled={!isEditing}
                                 />
+
                             </div>
                             <div>
                                 <label className="block text-gray-700 font-medium">Address</label>
