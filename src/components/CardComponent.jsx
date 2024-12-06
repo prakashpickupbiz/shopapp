@@ -55,7 +55,7 @@ export default function CardComponent() {
                             {item.head}
                         </h6>
                         <p className="mt-3 text-gray-500 text-center">
-                            {item.desc}
+                            {item.desc} xxbdgdfr
                         </p>
                     </div>
                 </div>
