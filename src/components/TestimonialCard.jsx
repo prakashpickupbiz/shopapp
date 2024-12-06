@@ -1,6 +1,8 @@
-import React, { useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
+// Testimonials data
 const testimonials = [
     {
         name: "Arjun Kumar",
@@ -47,73 +49,98 @@ const testimonials = [
 ];
 
 const TestimonialCard = ({ name, position, image, text, rating }) => (
-    <div className="bg-white shadow-lg rounded-lg p-6 md:p-8 flex flex-col items-center text-center mx-4 min-w-[300px]">
+    <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 shadow-lg rounded-lg p-6 md:p-8 flex flex-col items-center text-center mx-4 min-w-[300px] max-w-[400px] transition-transform transform duration-500 ease-in-out">
         <img
-            className="w-20 h-20 rounded-full object-cover mb-4"
+            className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md mb-4"
             src={image}
             alt={`${name}'s profile`}
         />
-        <h4 className="text-xl font-semibold mb-1">{name}</h4>
-        <p className="text-gray-500 text-sm mb-3">{position}</p>
+        <h4 className="text-2xl font-semibold text-white mb-1">{name}</h4>
+        <p className="text-gray-200 text-sm italic mb-3">{position}</p>
         <div className="flex mb-3">
             {Array.from({ length: 5 }, (_, index) => (
                 <FaStar
                     key={index}
-                    className={`h-5 w-5 ${index < rating ? "text-yellow-400" : "text-gray-300"}`}
+                    className={`h-5 w-5 ${index < rating ? "text-yellow-300" : "text-gray-400"}`}
                 />
             ))}
         </div>
-        <p className="text-gray-700 italic">"{text}"</p>
+        <p className="text-white italic">"{text}"</p>
     </div>
 );
 
 const Testimonials = () => {
-    const scrollContainerRef = useRef(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-    useEffect(() => {
-        const scrollContainer = scrollContainerRef.current;
+    const handleNext = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+    };
 
-        const scrollLoop = () => {
-            if (scrollContainer) {
-                scrollContainer.scrollLeft += 1; // Adjust the scroll speed as needed
-
-                // If scroll reaches the end, reset to the beginning
-                if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
-                    scrollContainer.scrollLeft = 0;
-                }
-
-                // Use requestAnimationFrame for smooth looping
-                requestAnimationFrame(scrollLoop);
-            }
-        };
-
-        // Start the scroll loop
-        requestAnimationFrame(scrollLoop);
-
-        // Cleanup function is not needed here because we don't want to stop the loop
-    }, []);
-
-    // Duplicate testimonials to create an infinite loop effect
-    const duplicatedTestimonials = [...testimonials, ...testimonials];
+    const handlePrev = () => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+        );
+    };
 
     return (
-        <div className="bg-gray-100 py-12 relative overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="text-3xl font-bold text-center mb-8">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 className="text-4xl font-bold text-blue-600 mb-12">
                     What People Are Saying
                 </h2>
-                {/* Scroll container */}
-                <div
-                    ref={scrollContainerRef}
-                    className="flex overflow-x-scroll no-scrollbar scroll-smooth w-full"
-                    style={{
-                        scrollbarWidth: "none", // Hides the scrollbar for Firefox
-                        msOverflowStyle: "none", // Hides the scrollbar for IE and Edge
-                    }}
-                >
-                    {duplicatedTestimonials.map((testimonial, index) => (
-                        <TestimonialCard key={index} {...testimonial} />
-                    ))}
+                <div className="relative flex items-center justify-center">
+
+                    {/* Navigation Buttons */}
+                    <button
+                        onClick={handlePrev}
+                        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-md z-10 hidden md:block"
+                        aria-label="Previous Testimonial"
+                    >
+                        <FaChevronLeft />
+                    </button>
+
+                    {/* Slider Container */}
+                    <div className="flex gap-4 overflow-x-auto scrollbar-hide md:overflow-hidden md:flex-nowrap justify-center">
+                        {/* On mobile, show one card at a time */}
+                        {testimonials.map((testimonial, index) => (
+                            <div
+                                key={index}
+                                className={`flex-shrink-0 transition-all duration-500 ease-in-out transform ${index === currentIndex ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+                                    }`}
+                            >
+                                <TestimonialCard {...testimonial} />
+                            </div>
+                        ))}
+                    </div>
+
+                    <button
+                        onClick={handleNext}
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-md z-10 hidden md:block"
+                        aria-label="Next Testimonial"
+                    >
+                        <FaChevronRight />
+                    </button>
+                </div>
+
+                {/* Mobile swipeable section */}
+                <div className="md:hidden mt-8 flex justify-center">
+                    <button
+                        onClick={handlePrev}
+                        className="bg-blue-500 text-white p-2 rounded-full"
+                        aria-label="Previous Testimonial"
+                    >
+                        <FaChevronLeft />
+                    </button>
+                    <div className="mx-4">
+                        <TestimonialCard {...testimonials[currentIndex]} />
+                    </div>
+                    <button
+                        onClick={handleNext}
+                        className="bg-blue-500 text-white p-2 rounded-full"
+                        aria-label="Next Testimonial"
+                    >
+                        <FaChevronRight />
+                    </button>
                 </div>
             </div>
         </div>

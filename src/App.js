@@ -8,21 +8,21 @@ import HeroSection from "./components/HeroSection";
 import Counter from "./components/Counter";
 import Card from "./components/ClassesDesc/Card";
 import AnimatedCounter from "./components/ClassesDesc/AnimatedCounter";
+import "./App.css";
 import SocialAchievements from "./components/ClassesDesc/SocialAchievements";
+import ImageSlider from "./components/ClassesDesc/ImageSlider";
 
 const App = () => {
   return (
     <div>
       <AppRouter />
 
-      <Testimonials />
+      {/* <Testimonials /> */}
       <Footer />
 
       {/* <Card/> */}
 
       {/* <Counter/> */}
-      
-
     </div>
   );
 };

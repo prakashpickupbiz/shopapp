@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { MdPersonPin } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import { FaChevronDown } from "react-icons/fa";
+import { FaBars, FaChevronDown } from "react-icons/fa";
 import CartBadge from "./CartBadge";
 
 const routes = [
@@ -39,6 +39,8 @@ export default function ClassesNavbar() {
     const [searchQuery, setSearchQuery] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [submenuVisible, setSubmenuVisible] = useState(false);
+    const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
+    const [isSearchActive, setIsSearchActive] = useState(false); // To track if search is active
     const navigate = useNavigate();
 
     const handleSearchChange = (e) => {
@@ -49,7 +51,6 @@ export default function ClassesNavbar() {
             (route) => route.name.toLowerCase().includes(query)
         );
         setSuggestions(matches);
-
     };
 
     const handleSearchSubmit = (e) => {
@@ -66,15 +67,20 @@ export default function ClassesNavbar() {
             alert("No matching class found");
         }
 
+        // Reset search input after submitting
+        setSearchQuery("");
+        setSuggestions([]);
+        setIsSearchActive(false); // Hide search input after submission
     };
 
     const handleItemClick = (name, path) => {
-        setSearchQuery(name); // Update the input with the clicked item's name
-        setSubmenuVisible(false); // Hide the submenu immediately
-        setSuggestions([]); // Clear suggestions
-        navigate(path); // Navigate to the item's path
-        setSearchQuery("")
-
+        setSearchQuery(name);
+        setSubmenuVisible(false);
+        setSuggestions([]);
+        navigate(path);
+        setSearchQuery("");
+        setMobileMenuVisible(false); // Close the mobile menu when an item is clicked
+        setIsSearchActive(false); // Hide search input after selecting a suggestion
     };
 
     return (
@@ -83,12 +89,19 @@ export default function ClassesNavbar() {
                 {/* Logo */}
                 <div className="text-xl font-bold">logo</div>
 
+                {/* Hamburger Icon for Mobile */}
+                <div className="md:hidden flex items-center">
+                    <button onClick={() => setMobileMenuVisible(!mobileMenuVisible)} className="text-2xl">
+                        <FaBars />
+                    </button>
+                </div>
+
                 {/* Navigation Links */}
-                <div className="nav">
+                <div className="hidden md:flex gap-12 items-center">
                     <ul className="flex justify-between gap-12 items-center">
                         {routes.map((route) => (
                             <Link key={route.path} to={route.path}>
-                                <li className="hover:text-blue-500">{route.name} </li>
+                                <li className="hover:text-blue-500">{route.name}</li>
                             </Link>
                         ))}
 
@@ -97,11 +110,10 @@ export default function ClassesNavbar() {
                             className="relative hover:text-blue-500 cursor-pointer flex items-center gap-2"
                             onClick={() => setSubmenuVisible((prev) => !prev)}
                         >
-
-                            <Link to={"/classes"}>
-                                Classes
-                            </Link>
-                            <FaChevronDown className={`transition-transform ${submenuVisible ? "rotate-180" : ""}`} />
+                            <Link to={"/classes"}>Classes</Link>
+                            <FaChevronDown
+                                className={`transition-transform ${submenuVisible ? "rotate-180" : ""}`}
+                            />
                             {/* Submenu */}
                             {submenuVisible && (
                                 <ul
@@ -109,17 +121,15 @@ export default function ClassesNavbar() {
                                     onClick={(e) => e.stopPropagation()} // Prevent submenu clicks from toggling
                                     style={{
                                         maxHeight: "80vh",
-                                        overflowY: "auto", // Enable scrolling
-                                        scrollbarWidth: "none", // For Firefox (Hide scrollbar)
+                                        overflowY: "auto",
                                     }}
                                 >
-                                    {/* Hide scrollbar in Webkit-based browsers */}
                                     <style>
                                         {`
-                .submenu::-webkit-scrollbar {
-                    display: none; /* Hide scrollbar */
-                }
-            `}
+                                        .submenu::-webkit-scrollbar {
+                                            display: none;
+                                        }
+                                    `}
                                     </style>
 
                                     {classSubmenu.map((submenu) => (
@@ -133,22 +143,45 @@ export default function ClassesNavbar() {
                                     ))}
                                 </ul>
                             )}
-
-
                         </li>
                     </ul>
                 </div>
 
                 {/* Search and Icons */}
-                <div className="flex items-center gap-6">
-                    {/* Search Bar */}
-                    <form onSubmit={handleSearchSubmit} className="flex items-center border-2 border-gray-300 rounded-lg p-1">
+                <div className="flex items-center gap-4">
+                    {/* Search Bar (Mobile Version Only Shows Search Icon Initially) */}
+                    <div className="md:hidden flex items-center">
+                        {!isSearchActive ? (
+                            <button onClick={() => setIsSearchActive(true)} className="text-2xl">
+                                <CiSearch />
+                            </button>
+                        ) : (
+                            <form onSubmit={handleSearchSubmit} className="flex items-center border-2 border-gray-300 rounded-lg p-1 w-48 sm:w-64">
+                                <input
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={handleSearchChange}
+                                    placeholder="Search..."
+                                    className="p-2 rounded-l-lg w-full focus:outline-none"
+                                />
+                                <button type="submit" className="bg-blue-500 p-2 rounded-r-lg text-white">
+                                    <CiSearch />
+                                </button>
+                            </form>
+                        )}
+                    </div>
+
+                    {/* Desktop Search Bar */}
+                    <form
+                        onSubmit={handleSearchSubmit}
+                        className="hidden md:flex items-center border-2 border-gray-300 rounded-lg p-1 w-48 sm:w-64"
+                    >
                         <input
                             type="text"
                             value={searchQuery}
                             onChange={handleSearchChange}
                             placeholder="Search..."
-                            className="p-2 rounded-l-lg w-64 focus:outline-none"
+                            className="p-2 rounded-l-lg w-full focus:outline-none"
                         />
                         <button type="submit" className="bg-blue-500 p-2 rounded-r-lg text-white">
                             <CiSearch />
@@ -157,7 +190,7 @@ export default function ClassesNavbar() {
 
                     {/* Suggestions */}
                     {suggestions.length > 0 && (
-                        <div className="absolute top-16 bg-white shadow-md p-2 mt-1 rounded-md">
+                        <div className="absolute top-16 bg-white shadow-md p-2 mt-1 rounded-md w-48 sm:w-64">
                             {suggestions.map((suggestion) => (
                                 <div
                                     key={suggestion.path}
@@ -170,20 +203,48 @@ export default function ClassesNavbar() {
                         </div>
                     )}
 
-                    {/* Profile and Cart */}
+                    {/* Profile and Cart (Visible only in Mobile Hamburger Menu) */}
                     <CartBadge />
                     <div className="text-2xl">
                         <Link to={"/profile"}>
                             <MdPersonPin />
                         </Link>
                     </div>
-
-                    {/* Enroll Button */}
-                    <button className="bg-blue-500 p-2 rounded-lg font-bold text-white">
-                        Enroll Now
-                    </button>
                 </div>
             </div>
+
+            {/* Mobile Menu */}
+            {mobileMenuVisible && (
+                <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-md p-4 z-10">
+                    <ul>
+                        {routes.map((route) => (
+                            <Link key={route.path} to={route.path}>
+                                <li
+                                    className="p-2 hover:bg-blue-500 hover:text-white"
+                                    onClick={() => setMobileMenuVisible(false)}
+                                >
+                                    {route.name}
+                                </li>
+                            </Link>
+                        ))}
+                        <li
+                            className="p-2 hover:bg-blue-500 hover:text-white"
+                            onClick={() => setMobileMenuVisible(false)}
+                        >
+                            <Link to={"/classes"}>Classes</Link>
+                        </li>
+                        {/* Cart and Profile Icons in Mobile Menu */}
+                        <div className="p-2 hover:bg-blue-500 hover:text-white">
+                            <CartBadge />
+                        </div>
+                        <div className="p-2 hover:bg-blue-500 hover:text-white">
+                            <Link to={"/profile"}>
+                                <MdPersonPin />
+                            </Link>
+                        </div>
+                    </ul>
+                </div>
+            )}
         </nav>
     );
 }

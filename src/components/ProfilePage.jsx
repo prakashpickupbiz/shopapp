@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 const ProfilePage = () => {
     const navigate = useNavigate();
 
-    // Load user data from localStorage or set default values
     const [user, setUser] = useState(() => {
         const savedUser = localStorage.getItem("userProfile");
         return savedUser
@@ -20,21 +19,17 @@ const ProfilePage = () => {
             };
     });
 
-    // State to track if the form is in edit mode
     const [isEditing, setIsEditing] = useState(false);
 
-    // Save user data to localStorage whenever it changes
     useEffect(() => {
         localStorage.setItem("userProfile", JSON.stringify(user));
     }, [user]);
 
-    // Handler for form input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUser({ ...user, [name]: value });
     };
 
-    // Handler for saving the form
     const handleSave = () => {
         if (!user.name || !user.email || !user.phone || !user.address) {
             toast.error("All fields must be filled out before saving!", {
@@ -46,18 +41,15 @@ const ProfilePage = () => {
         toast.success("Profile saved successfully!", { position: "top-right" });
     };
 
-    // Handler for editing the form
     const handleEdit = () => {
         setIsEditing(true);
     };
 
-    // Handler for logging out
     const handleLogout = () => {
         toast.info("You have logged out!", { position: "top-right" });
-        navigate("/"); // Redirect to home page
+        navigate("/");
     };
 
-    // Handler for profile picture upload
     const handleProfilePicChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -73,26 +65,40 @@ const ProfilePage = () => {
     };
 
     return (
-        <div className="p-6 bg-gray-100 min-h-screen">
+        <div
+            className="min-h-screen p-6"
+            style={{
+                background: "linear-gradient(to right, #ff7e5f, #feb47b, #ff6a88)",
+            }}
+        >
             <ToastContainer />
-            <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-2xl font-semibold mb-4">Profile</h2>
+            <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-8">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-3xl font-bold text-gray-800">Your Profile</h2>
+                    <button
+                        className="bg-gradient-to-r from-red-400 to-red-600 text-white py-2 px-6 rounded-lg hover:from-red-500 hover:to-red-700"
+                        onClick={handleLogout}
+                    >
+                        Logout
+                    </button>
+                </div>
 
-                {/* Profile Picture Upload */}
-                <div className="mb-6 text-center">
-                    <div className="relative">
+                {/* Profile Section */}
+                <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
+                    <div className="text-center md:text-left">
                         <img
                             src={user.profilePic || "https://via.placeholder.com/150"}
                             alt="Profile"
-                            className="w-32 h-32 rounded-full mx-auto object-cover border-2 border-gray-300"
+                            className="w-32 h-32 rounded-full object-cover border-4 border-pink-400 shadow-lg mx-auto md:mx-0"
                         />
                         {isEditing && (
-                            <div className="mt-2">
+                            <div className="mt-4">
                                 <label
                                     htmlFor="profilePic"
-                                    className="bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-600"
+                                    className="bg-gradient-to-r from-blue-400 to-blue-600 text-white px-4 py-2 rounded-full cursor-pointer hover:from-blue-500 hover:to-blue-700"
                                 >
-                                    Upload Image
+                                    Change Picture
                                 </label>
                                 <input
                                     id="profilePic"
@@ -104,92 +110,90 @@ const ProfilePage = () => {
                             </div>
                         )}
                     </div>
+                    <div className="flex-1">
+                        <form>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {[
+                                    { label: "Name", name: "name", value: user.name },
+                                    { label: "Email", name: "email", value: user.email },
+                                    { label: "Phone", name: "phone", value: user.phone },
+                                    { label: "Address", name: "address", value: user.address },
+                                ].map((field) => (
+                                    <div key={field.name}>
+                                        <label className="block text-gray-700 font-medium mb-1">
+                                            {field.label}
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name={field.name}
+                                            value={field.value}
+                                            onChange={handleChange}
+                                            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${isEditing
+                                                    ? "focus:ring-purple-400"
+                                                    : "bg-gray-200"
+                                                }`}
+                                            disabled={!isEditing}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
-                {/* User Information Form */}
-                <form>
-                    <div className="mb-6">
-                        <h3 className="text-lg font-semibold mb-2">Personal Information</h3>
-                        <div className="bg-gray-50 p-4 rounded-lg space-y-4">
-                            <div>
-                                <label className="block text-gray-700 font-medium">Name</label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={user.name}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border rounded-lg"
-                                    disabled={!isEditing}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 font-medium">Email</label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={user.email}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border rounded-lg"
-                                    disabled={!isEditing}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 font-medium">Phone</label>
-                                <input
-                                    type="number"
-                                    name="phone"
-                                    value={user.phone}
-                                    onChange={(e) => {
-                                        let value = e.target.value;
-                                        // Trim to 10 digits
-                                        if (value.length > 10) {
-                                            value = value.slice(0, 10);
-                                        }
-                                        handleChange({ target: { name: 'phone', value } });
-                                    }}
-                                    className="w-full p-2 border rounded-lg"
-                                    disabled={!isEditing}
-                                />
-
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 font-medium">Address</label>
-                                <input
-                                    type="text"
-                                    name="address"
-                                    value={user.address}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border rounded-lg"
-                                    disabled={!isEditing}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
                 {/* Buttons */}
-                <div className="flex space-x-4">
+                <div className="text-center mb-6">
                     {isEditing ? (
                         <button
-                            className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                            className="bg-gradient-to-r from-green-400 to-green-600 text-white py-2 px-6 rounded-lg hover:from-green-500 hover:to-green-700"
                             onClick={handleSave}
                         >
                             Save
                         </button>
                     ) : (
                         <button
-                            className="bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors"
+                            className="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-6 rounded-lg hover:from-blue-500 hover:to-blue-700"
                             onClick={handleEdit}
                         >
                             Edit
                         </button>
                     )}
-                    <button
-                        className="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors"
-                        onClick={handleLogout}
-                    >
-                        Logout
-                    </button>
+                </div>
+
+                {/* Activity Logs */}
+                <div className="mb-6">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">Activity Logs</h3>
+                    <ul className="space-y-4">
+                        <li className="p-4 bg-gray-50 rounded-lg shadow-sm">
+                            <span className="font-medium">Logged in:</span> 2 hours ago
+                        </li>
+                        <li className="p-4 bg-gray-50 rounded-lg shadow-sm">
+                            <span className="font-medium">Updated profile:</span> Yesterday
+                        </li>
+                        <li className="p-4 bg-gray-50 rounded-lg shadow-sm">
+                            <span className="font-medium">Uploaded a document:</span> Last week
+                        </li>
+                    </ul>
+                </div>
+
+                {/* Quick Stats */}
+                <div>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">Quick Stats</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {[
+                            { label: "Followers", value: 1200 },
+                            { label: "Posts", value: 75 },
+                            { label: "Comments", value: 320 },
+                        ].map((stat) => (
+                            <div
+                                key={stat.label}
+                                className="bg-gradient-to-r from-purple-400 to-purple-600 text-white p-6 rounded-lg text-center shadow-lg"
+                            >
+                                <h4 className="text-2xl font-bold">{stat.value}</h4>
+                                <p className="text-lg">{stat.label}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

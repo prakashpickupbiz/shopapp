@@ -5,20 +5,20 @@ import HeroSection from './HeroSection'
 
 export default function Home() {
   return (
-      <div>
+    <div>
 
-        <HeroSection/>
-
-
-        <CardComponent/>
+      <HeroSection />
 
 
+      <CardComponent/>
 
 
 
 
 
 
-      </div>
+
+
+    </div>
   )
 }
