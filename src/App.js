@@ -11,11 +11,13 @@ import AnimatedCounter from "./components/ClassesDesc/AnimatedCounter";
 import "./App.css";
 import SocialAchievements from "./components/ClassesDesc/SocialAchievements";
 import ImageSlider from "./components/ClassesDesc/ImageSlider";
+import InputDropdown from "./components/ClassesDesc/InputDropdown";
 
 const App = () => {
   return (
     <div>
       <AppRouter />
+      {/* <InputDropdown /> */}
 
       {/* <Testimonials /> */}
       <Footer />

@@ -55,7 +55,7 @@ export default function CardComponent() {
                             {item.head}
                         </h6>
                         <p className="mt-3 text-gray-500 text-center">
-                            {item.desc} fgdg
+                            {item.desc}
                         </p>
                     </div>
                 </div>
