@@ -72,7 +72,7 @@ const Mehandi = () => {
             Elevate your creativity with hands-on classes and AI-guided tips, where tradition meets innovation.
           </motion.p>
           <motion.button
-            className="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-lg rounded-lg hover:scale-110 transform transition-transform"
+            className="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-lg rounded-full hover:scale-110 transform transition-transform"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -118,7 +118,7 @@ const Mehandi = () => {
                 <p className="text-blue-600 text-sm italic mb-4">
                   <strong>AI Tip:</strong> {classItem.AI_Tips}
                 </p>
-                <button className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                <button className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 rounded-full hover:bg-blue-700">
                   Learn More
                 </button>
               </div>
@@ -165,7 +165,7 @@ const Mehandi = () => {
           Don’t just learn Mehndi, master it! With personalized lessons, AI-guided tips, and a supportive community, your creativity will know no bounds.
         </p>
         <motion.button
-          className="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-lg rounded-lg hover:scale-110 transform transition-transform"
+          className="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-lg rounded-full hover:scale-110 transform transition-transform"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -181,4 +181,3 @@ const Mehandi = () => {
 };
 
 export default Mehandi;
- 

@@ -42,13 +42,13 @@ const CartPage = () => {
             <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
 
             <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-3xl font-bold mb-6">Your Cart</h2>
+                <h2 className="text-3xl font-bold mb-6 text-center sm:text-left">Your Cart</h2>
 
                 {cart.length === 0 ? (
                     <div className="text-center py-20">
                         <p className="text-xl text-gray-600 mb-4">Your cart is empty!</p>
                         <button
-                            onClick={() => window.location.href = "/classes"}
+                            onClick={() => (window.location.href = "/classes")}
                             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all"
                         >
                             Browse Products
@@ -59,9 +59,9 @@ const CartPage = () => {
                         {cart.map((item) => (
                             <div
                                 key={item.id}
-                                className="flex justify-between items-center py-4 border-b border-gray-200"
+                                className="flex flex-col sm:flex-row justify-between items-center py-4 border-b border-gray-200 space-y-4 sm:space-y-0"
                             >
-                                <div className="flex items-center space-x-4">
+                                <div className="flex items-center space-x-4 w-full sm:w-auto">
                                     <img
                                         src={item.image}
                                         alt={item.name}
@@ -111,7 +111,7 @@ const CartPage = () => {
                             <h3 className="text-2xl font-semibold mb-4">
                                 Total: ₹{calculateTotal()}
                             </h3>
-                            <div className="space-x-4">
+                            <div className="space-y-4 sm:space-y-0 sm:space-x-4 flex flex-col sm:flex-row justify-end">
                                 <button
                                     onClick={handleClearCart}
                                     className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"

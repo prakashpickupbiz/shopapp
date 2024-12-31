@@ -87,7 +87,7 @@
 }
 
 body {
-  font-family: nunito;
+   font-family: "nunito", serif;
 }
 
 /* Add this to your CSS or Tailwind config */

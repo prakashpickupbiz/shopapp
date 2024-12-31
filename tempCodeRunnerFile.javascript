@@ -1,11 +1,3 @@
-function outerFunction() {
-  let outerVar = "I am from the outer function";
-
-  function innerFunction() {
-    console.log(outerVar); // innerFunction has access to outerVar
-  }
-
-  return innerFunction;
-}
-const closureExample = outerFunction();
-closureExample(); // Output: "I am from the outer function"
+const numbers = [4, 2, 5, 1, 3];
+numbers.sort(); // Sorts as strings
+console.log(numbers); // Output: [1, 2, 3, 4, 5]

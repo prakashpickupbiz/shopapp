@@ -86,7 +86,7 @@ const Footer = () => {
                         <li className="flex items-center space-x-2">
                             <IoIosArrowDropright />
                             <Link to={"/contact"}>
-                            <a href="#" className="hover:text-blue-500">Contact Us</a>
+                                <a href="#" className="hover:text-blue-500">Contact Us</a>
                             </Link>
                         </li>
                     </ul>

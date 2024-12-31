@@ -60,24 +60,23 @@ export default function EnglishSpoken() {
   return (
     <>
       {/* Hero Section */}
-      <div className="flex p-5 justify-around mb-6 gap-6bg-gradient-to-br from-blue-500 to-green-500p-2">
+      <div className="flex p-5 justify-around mb-6 gap-6 bg-gradient-to-br from-blue-500 to-green-500 p-2">
         <div className="flex flex-col gap-5 items-start justify-center">
           <h1 className="text-5xl font-bold">Online Education</h1>
-          <h2>
+          <h2 className="text-lg">
             Empowering Communication, Unlocking Opportunities: Master the Art
             of Spoken English.
           </h2>
-          <button className="rounded-3xl bg-blue-950 text-white p-2">
+          <button className="rounded-3xl bg-blue-950 text-white px-6 py-2 hover:bg-blue-800">
             Contact us
           </button>
         </div>
         <img
-          className="w-auto rounded-full rounded-tr-sm-lg "
+          className="w-auto max-h-64 rounded-lg shadow-md"
           src="https://zenithguidance.com/wp-content/uploads/2021/02/spoken-english.jpg"
           alt="Online Education"
         />
       </div>
-
 
       {/* Key Factors Section */}
       <div className="flex flex-col items-center space-y-8 p-6">
@@ -100,14 +99,15 @@ export default function EnglishSpoken() {
       {/* Gallery Section */}
       <div className="p-4">
         <h1 className="text-center text-4xl font-bold p-4 m-3">Gallery</h1>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {galleryImages.map((img, index) => (
-            <img
-              key={index}
-              className="h-auto max-w-full rounded-lg"
-              src={img}
-              alt={`Gallery Image ${index + 1}`}
-            />
+            <div key={index} className="overflow-hidden rounded-lg shadow-md">
+              <img
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 ease-in-out"
+                src={img}
+                alt={`Gallery Image ${index + 1}`}
+              />
+            </div>
           ))}
         </div>
       </div>

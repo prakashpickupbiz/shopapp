@@ -77,7 +77,7 @@ const ProfilePage = () => {
                 <div className="flex items-center justify-between mb-6">
                     <h2 className="text-3xl font-bold text-gray-800">Your Profile</h2>
                     <button
-                        className="bg-gradient-to-r from-red-400 to-red-600 text-white py-2 px-6 rounded-lg hover:from-red-500 hover:to-red-700"
+                        className="bg-gradient-to-r from-red-400 to-red-600 text-white py-2 px-6 rounded-full hover:from-red-500 hover:to-red-700"
                         onClick={handleLogout}
                     >
                         Logout
@@ -128,9 +128,9 @@ const ProfilePage = () => {
                                             name={field.name}
                                             value={field.value}
                                             onChange={handleChange}
-                                            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${isEditing
-                                                    ? "focus:ring-purple-400"
-                                                    : "bg-gray-200"
+                                            className={`w-full px-4 py-2 border rounded-full focus:outline-none focus:ring-2 ${isEditing
+                                                ? "focus:ring-purple-400"
+                                                : "bg-gray-200"
                                                 }`}
                                             disabled={!isEditing}
                                         />
@@ -145,14 +145,14 @@ const ProfilePage = () => {
                 <div className="text-center mb-6">
                     {isEditing ? (
                         <button
-                            className="bg-gradient-to-r from-green-400 to-green-600 text-white py-2 px-6 rounded-lg hover:from-green-500 hover:to-green-700"
+                            className="bg-gradient-to-r from-green-400 to-green-600 text-white py-2 px-6 rounded-full hover:from-green-500 hover:to-green-700"
                             onClick={handleSave}
                         >
                             Save
                         </button>
                     ) : (
                         <button
-                            className="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-6 rounded-lg hover:from-blue-500 hover:to-blue-700"
+                            className="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-6 rounded-full hover:from-blue-500 hover:to-blue-700"
                             onClick={handleEdit}
                         >
                             Edit
@@ -164,13 +164,13 @@ const ProfilePage = () => {
                 <div className="mb-6">
                     <h3 className="text-2xl font-bold text-gray-800 mb-4">Activity Logs</h3>
                     <ul className="space-y-4">
-                        <li className="p-4 bg-gray-50 rounded-lg shadow-sm">
+                        <li className="p-4 bg-gray-50 rounded-full shadow-sm">
                             <span className="font-medium">Logged in:</span> 2 hours ago
                         </li>
-                        <li className="p-4 bg-gray-50 rounded-lg shadow-sm">
+                        <li className="p-4 bg-gray-50 rounded-full shadow-sm">
                             <span className="font-medium">Updated profile:</span> Yesterday
                         </li>
-                        <li className="p-4 bg-gray-50 rounded-lg shadow-sm">
+                        <li className="p-4 bg-gray-50 rounded-full shadow-sm">
                             <span className="font-medium">Uploaded a document:</span> Last week
                         </li>
                     </ul>
@@ -187,7 +187,7 @@ const ProfilePage = () => {
                         ].map((stat) => (
                             <div
                                 key={stat.label}
-                                className="bg-gradient-to-r from-purple-400 to-purple-600 text-white p-6 rounded-lg text-center shadow-lg"
+                                className="bg-gradient-to-r from-purple-400 to-purple-600 text-white p-6 rounded-full text-center shadow-lg"
                             >
                                 <h4 className="text-2xl font-bold">{stat.value}</h4>
                                 <p className="text-lg">{stat.label}</p>

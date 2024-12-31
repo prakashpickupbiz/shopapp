@@ -12,21 +12,28 @@ import "./App.css";
 import SocialAchievements from "./components/ClassesDesc/SocialAchievements";
 import ImageSlider from "./components/ClassesDesc/ImageSlider";
 import InputDropdown from "./components/ClassesDesc/InputDropdown";
+import Map from "./components/ClassesDesc/Map";
+
+import FAQ from "./components/FAQ";
 
 const App = () => {
   return (
     <div>
       <AppRouter />
-      {/* <InputDropdown /> */}
 
-      {/* <Testimonials /> */}
+
+      
+      <FAQ />
       <Footer />
 
-      {/* <Card/> */}
 
-      {/* <Counter/> */}
+
+
+      <Map />
+
     </div>
   );
 };
 
 export default App;
+

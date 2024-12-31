@@ -5,7 +5,7 @@ const Contact = () => {
     return (
         <div className="flex">
             <div className="m-12 w-2/4 ml-20">
-                <h2 className="text-2xl text-cyan-500" >------contact us</h2>
+                <h2 className="text-2xl text-cyan-500" >⭐⭐⭐⭐⭐------contact us</h2>
                 <h1 className="text-5xl  hover:italic font-medium mt-5">Write Us Anytime, We Would Love To Hear From You!</h1>
                 <p className="mt-5 font-sans font-medium text-zinc-400">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur consequatur repudiandae voluptatem ipsam ea neque, temporibus dolorum sint harum sunt!</p>
                 <div className="mt-5">
